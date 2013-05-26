@@ -43,8 +43,9 @@ class plgK2Example extends K2Plugin {
 
 	function plgK2Example( & $subject, $params) {
 		parent::__construct($subject, $params);
-                /* N.B. we check if params already exist because  in future versions of K2, maybe the parent K2Plugin class may implement this like the new JPlugin class does 
-                 calling the JPlugin constructor and let inheritance do the work */
+                /* N.B. no need for this in Joomla 3.0: the parent K2Plugin class 
+                 * extends JPlugin class  that sets $this->params for us
+                 (so the if isset() is to let inheritance do the work for us) */
                 if(!isset($this->params)){
 			$plugin = JPluginHelper::getPlugin('k2', $this->pluginName);
 			$isJoomla3= ((float)JVERSION) >= 3.0;
