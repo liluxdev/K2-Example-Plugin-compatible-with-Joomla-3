@@ -23,9 +23,39 @@ class plgK2Example extends K2Plugin {
 	// Some params
 	var $pluginName = 'example';
 	var $pluginNameHumanReadable = 'Example K2 Plugin';
+        
+        /**
+         * 
+         * 
+         * it's more efficient to have a single instance of params available to all plugin methods like in Joomla plugin
+         * 
+         * NB. we don't need to really declecare this class attribute in J3 because $this->params is inherited by the new JPlugin class in J3
+         * and we don't declare it for J2.5 to avoid to override of the value in J3
+         * 
+         * @see this classconstructor and the inner isset() check
+         * 
+         * @override
+         * @var JParameter or JRegistry
+         
+         var $params = null; //inherited by the new JPlugin class in J3
+      
+         */
 
 	function plgK2Example( & $subject, $params) {
 		parent::__construct($subject, $params);
+                /* N.B. we check if params already exist because  in future versions of K2, maybe the parent K2Plugin class may implement this like the new JPlugin class does 
+                 calling the JPlugin constructor and let inheritance do the work */
+                if(!isset($this->params)){
+			$plugin = JPluginHelper::getPlugin('k2', $this->pluginName);
+			$isJoomla3= ((float)JVERSION) >= 3.0;
+                        if ($isJoomla3){
+                              $this->params = new JRegistry( $plugin->params ); 
+                        }else{
+                              $this->params = new JParameter( $plugin->params );  
+                        }
+		}
+                
+                
 	}
 
 	/**
@@ -63,9 +93,8 @@ class plgK2Example extends K2Plugin {
 	function onK2AfterDisplayContent( &$item, &$params, $limitstart) {
 		$mainframe = &JFactory::getApplication();
 
-		// Get the K2 plugin params (the stuff you see when you edit the plugin in the plugin manager)
-		$plugin = &JPluginHelper::getPlugin('k2', $this->pluginName);
-		$pluginParams = new JParameter($plugin->params);
+		$pluginParams = $this->params;  //that's all folks! (you can also use directly $this->params,
+                // i put this just because the inherited variable name is confiusing with the k2 params passed in methods
 
 		// Get the output of the K2 plugin fields (the data entered by your site maintainers)
 		$plugins = new K2Parameter($item->plugins, '', $this->pluginName);
@@ -96,9 +125,9 @@ class plgK2Example extends K2Plugin {
 	function onK2CategoryDisplay( & $category, & $params, $limitstart) {
 		$mainframe = &JFactory::getApplication();
 		
-		// Get the K2 plugin params (the stuff you see when you edit the plugin in the plugin manager)
-		$plugin = &JPluginHelper::getPlugin('k2', $this->pluginName);
-		$pluginParams = new JParameter($plugin->params);
+		$pluginParams = $this->params;  //that's all folks! (you can also use directly $this->params,
+                // i put this just because the inherited variable name is confiusing with the k2 params passed in methods
+
 		
 		// Get the output of the K2 plugin fields (the data entered by your site maintainers)
 		$plugins = new K2Parameter($category->plugins, '', $this->pluginName);
@@ -112,9 +141,8 @@ class plgK2Example extends K2Plugin {
 	function onK2UserDisplay( & $user, & $params, $limitstart) {
 		$mainframe = &JFactory::getApplication();
 		
-		// Get the K2 plugin params (the stuff you see when you edit the plugin in the plugin manager)
-		$plugin = &JPluginHelper::getPlugin('k2', $this->pluginName);
-		$pluginParams = new JParameter($plugin->params);
+                $pluginParams = $this->params;  //that's all folks! (you can also use directly $this->params,
+                // i put this just because the inherited variable name is confiusing with the k2 params passed in methods
 		
 		// Get the output of the K2 plugin fields (the data entered by your site maintainers)
 		$plugins = new K2Parameter($user->plugins, '', $this->pluginName);
