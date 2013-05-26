@@ -21,16 +21,51 @@
 				<field name="height" type="text" default="344" label="Video height" description="" />
 			</fieldset>
 		</fields>
+          
+                 
 	</config>
+	 
+        <!-- K2 plugin parameters which extend K2 backend forms are defined here. We use the same syntax as Joomla! 1.5 only, yet they are compatible with Joomla! 1.7 as well. These parameters are parsed by K2 only and we decided to just make things easier for developers, instead of opting for double parameters in 'params' and 'fields' blocks. -->
 	
-	<!-- K2 plugin parameters which extend K2 backend forms are defined here. We use the same syntax as Joomla! 1.5 only, yet they are compatible with Joomla! 1.7 as well. These parameters are parsed by K2 only and we decided to just make things easier for developers, instead of opting for double parameters in 'params' and 'fields' blocks. -->
-	<params group="item-video">
-		<param name="videoURL_item" type="text" size="80" default="" label="YouTube URL (for item forms)" description="" />
-	</params>
-	<params group="category">
-		<param name="videoURL_cat" type="text" size="80" default="" label="YouTube URL (for category forms)" description="" />
-	</params>
-	<params group="user">
-		<param name="videoURL_user" type="text" size="80" default="" label="YouTube URL (for user forms)" description="" />
-	</params>
+        <!-- 
+        
+            Available K2 parameter positions:
+            
+                 All the "tabs" in the item administrative inferface:
+            
+                    <fields group="item-content">
+                    </fields>
+                    <fields group="item-image">
+                    </fields>
+                    <fields group="item-gallery">
+                    </fields>
+                    <fields group="item-video">
+                    </fields>
+                    <fields group="item-extra-fields">
+                    </fields>
+                    <fields group="item-attachments">
+                    </fields>
+                    <fields group="item-other">
+                    </fields>
+                    
+                     <fields group="category">
+                     </fields>
+                     
+                     <fields group="user">
+                     </fields>
+                    
+                    
+                
+        -->
+                <fields group="item-video">
+                    <field name="videoURL_item" type="text" size="80" default="" label="YouTube URL (for item forms)" description="" />
+                 </fields>
+                <fields group="category">
+                    <field name="videoURL_cat" type="text" size="80" default="" label="YouTube URL (for category forms)" description="" />
+                </fields>
+                <fields group="user">
+                    <field name="videoURL_user" type="text" size="80" default="" label="YouTube URL (for user forms)" description="" />
+                </fields>
+        
+
 </extension>
